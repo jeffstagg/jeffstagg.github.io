@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>comptia on Jeff Stagg</title>
+    <link>https://jeffstagg.github.io/tags/comptia/</link>
+    <description>Recent content in comptia on Jeff Stagg</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Aug 2022 18:49:01 +0200</lastBuildDate><atom:link href="https://jeffstagg.github.io/tags/comptia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>NFS Mounts in Linux Filesystems</title>
+      <link>https://jeffstagg.github.io/posts/220816-nfsmounts/</link>
+      <pubDate>Tue, 16 Aug 2022 18:49:01 +0200</pubDate>
+      
+      <guid>https://jeffstagg.github.io/posts/220816-nfsmounts/</guid>
+      <description>Mounting NFS in Manjaro Linux Ensure you&amp;rsquo;ve got nfs-utils installed to mount drive. Then create folder and add entry to /etc/fstab
+$&amp;gt; pamac build nfs-utils$&amp;gt; sudo mkdir /mnt/NFSDrive$&amp;gt; sudo nano /etc/fstab192.168.1.xx:/remote/path	/mnt/NFSDrive	nfs	defaults	0	0
+Now mount your drive as root
+$&amp;gt; sudo mount -t nfs 192.168.1.xx:/remote/path /mnt/NFSDriveUbuntu install nfs-common instead</description>
+      <content>&lt;h1 id=&#34;mounting-nfs-in-manjaro-linux&#34;&gt;Mounting NFS in Manjaro Linux&lt;/h1&gt;
+&lt;p&gt;Ensure you&amp;rsquo;ve got nfs-utils installed to mount drive. Then create folder and add entry to &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$&amp;gt; pamac build nfs-utils
+$&amp;gt; sudo mkdir /mnt/NFSDrive
+$&amp;gt; sudo nano /etc/fstab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;192.168.1.xx:/remote/path	/mnt/NFSDrive	nfs	defaults	0	0&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now mount your drive as root&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$&amp;gt; sudo mount -t nfs 192.168.1.xx:/remote/path /mnt/NFSDrive
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;ubuntu&#34;&gt;Ubuntu&lt;/h2&gt;
+&lt;p&gt;install &lt;code&gt;nfs-common&lt;/code&gt; instead&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Network&#43; Study Notes</title>
+      <link>https://jeffstagg.github.io/posts/220517-network-plus/</link>
+      <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffstagg.github.io/posts/220517-network-plus/</guid>
+      <description>Background I&amp;rsquo;m studying for the CompTIA Network+ N10-008 exam. There&amp;rsquo;s a LOT of material, so I&amp;rsquo;ll use this page to organize notes on what I used to study, how I went about it, and helpful charts I&amp;rsquo;ll use to memorize the needful.
+When I was in high school, I took a Cisco certification course. We offered it as an elective at our school to try to get more kids into tech.</description>
+      <content>&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;m studying for the CompTIA Network+ N10-008 exam. There&amp;rsquo;s a LOT of material, so I&amp;rsquo;ll
+use this page to organize notes on what I used to study, how I went about it, and
+helpful charts I&amp;rsquo;ll use to memorize the needful.&lt;/p&gt;
+&lt;p&gt;When I was in high school, I took a Cisco certification course. We offered it as an elective at our school to
+try to get more kids into tech. It took a whole year for the Networking 1 and 2 class, and at the end, you were supposedly able to
+take your CCNA and go on to be a network tech right out of high school. The course wasn&amp;rsquo;t great, but I did learn to configure a router,
+build patch cables, etc.&lt;/p&gt;
+&lt;p&gt;I also moved into a house with no previous network infrastructure last year, so I had the joy of running cable through walls and my attic already,
+terminating ends and testing all my connections. I&amp;rsquo;m building a Lack Rack at the moment to host my patch panel, router, switch, and other goodies that make up my home network.&lt;/p&gt;
+&lt;h2 id=&#34;materials&#34;&gt;Materials&lt;/h2&gt;
+&lt;p&gt;No links seen here are affiliate links.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.amazon.com/CompTIA-Network-Guide-Sixth-N10-006/dp/0071848223/&#34;&gt;All-In-One Network+ Book&lt;/a&gt; - Mike Meyers - I used the N10-006 version because it was only $8 used, and I&amp;rsquo;ll make up the updated info by buying Meyers&amp;rsquo; Udemy course
+&lt;a href=&#34;https://www.udemy.com/course/total-comptia-network-n10-008/&#34;&gt;TOTAL: CompTIA Network+ (N10-008)&lt;/a&gt; - Mike Meyers, Joe Ramm - For those that don&amp;rsquo;t like
+to read, you can listen to the soothing voices of Mike Meyers and Joe Ramm whisper sweet subnetting into your ears. This is basically just a narration of the Network+ book.
+&lt;a href=&#34;https://www.udemy.com/course/comptia-network-008-exams/&#34;&gt;CompTIA Network+ (N10-008) 6 Practice Exams&lt;/a&gt; - Jason Dion
+&lt;a href=&#34;https://www.professormesser.com/network-plus/n10-008/n10-008-video/n10-008-training-course/&#34;&gt;Professor Messer&amp;rsquo;s CompTIA N10-008 Network+ Course&lt;/a&gt; - Professor Messer offers a free video training course. He goes in a different order than Meyers, so I&amp;rsquo;m saving his stuff for after Meyers&amp;rsquo; training
+&lt;a href=&#34;https://www.youtube.com/user/sunnylearning/videos&#34;&gt;Sunny Learning&lt;/a&gt; - Sunny has some interesting information on his channel and explains in a way that is easy to work with. Check out his &lt;a href=&#34;https://www.youtube.com/watch?v=ecCuyq-Wprc&#34;&gt;&amp;ldquo;Subnetting Is Simple&amp;rdquo; video&lt;/a&gt;.
+&lt;a href=&#34;https://ankiweb.net/&#34;&gt;Anki&lt;/a&gt; - Anki is open-source software that helps you memorize things with flash cards. I found &lt;a href=&#34;https://ankiweb.net/shared/info/161585723&#34;&gt;this Network+ Starter Set deck&lt;/a&gt; and will be using these cards until I develop my own, based on what I&amp;rsquo;m lagging behind in. I may not need to make my own, we&amp;rsquo;ll see how the practice exams go.
+&lt;a href=&#34;https://f-droid.org/en/packages/com.ichi2.anki/&#34;&gt;AnkiDroid&lt;/a&gt; - Android app for Anki.&lt;/p&gt;
+&lt;p&gt;Note: The Udemy courses sound expensive until you browse the Udemy site for a little while. Their courses go on &amp;ldquo;sale&amp;rdquo;, and the courses that all say they&amp;rsquo;re $100-200 are actually about $12 or so at other times. I paid $13 for the two Udemy courses, and at the time I&amp;rsquo;m writing this post to grab links, they&amp;rsquo;re on sale for $9.99. Don&amp;rsquo;t get impatient, just give it a week if they&amp;rsquo;re not on sale right now. Start with the book anyway.&lt;/p&gt;
+&lt;h2 id=&#34;strategy&#34;&gt;Strategy&lt;/h2&gt;
+&lt;p&gt;The way I learn best is to read, then think about or discuss what I&amp;rsquo;ve read, then put it into practice. With the materials I&amp;rsquo;ve got available,
+I&amp;rsquo;m reading a chapter in the All In One book, then watching the corresponding video in Meyers&amp;rsquo; video course. This helps me to hear it explained, sometimes in a different way, and helps me to solidify what I&amp;rsquo;ve read. Once I&amp;rsquo;ve made it through the book and videos, I&amp;rsquo;ll take a practice exam and see how I do. If I make above a 70%, I&amp;rsquo;ll go ahead and schedule my exam for 1 month out and continue my studies. If I make below a 70%, I&amp;rsquo;ll schedule it for 2 months out. The test isn&amp;rsquo;t cheap, so I only want to have to take it once.&lt;/p&gt;
+&lt;p&gt;Next I&amp;rsquo;ll go through the exam objectives and see if there&amp;rsquo;s anywhere I feel like I&amp;rsquo;m lacking. Based on where I did poorly on the practice exams, I&amp;rsquo;ll focus on areas I felt weakest. It may help to go through some of Professor Messer&amp;rsquo;s videos and Sunny&amp;rsquo;s videos on some topics as well. Every week leading up to the exam, I&amp;rsquo;ll take a practice exam to develop a rhythm.&lt;/p&gt;
+&lt;h3 id=&#34;osi-model&#34;&gt;OSI Model&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;7 Application&lt;/li&gt;
+&lt;li&gt;6 Presentation&lt;/li&gt;
+&lt;li&gt;5 Session&lt;/li&gt;
+&lt;li&gt;4 Transport&lt;/li&gt;
+&lt;li&gt;3 Network&lt;/li&gt;
+&lt;li&gt;2 Data Link&lt;/li&gt;
+&lt;li&gt;1 Physical&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;subnetting&#34;&gt;Subnetting&lt;/h3&gt;
+&lt;h3 id=&#34;802s&#34;&gt;802&amp;rsquo;s&lt;/h3&gt;
+&lt;h3 id=&#34;cables&#34;&gt;Cables&lt;/h3&gt;
+&lt;h3 id=&#34;ports&#34;&gt;Ports&lt;/h3&gt;
+&lt;h3 id=&#34;ipv4-classes&#34;&gt;IPv4 Classes&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Class&lt;/th&gt;
+&lt;th&gt;IP Range&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;A&lt;/td&gt;
+&lt;td&gt;1 - 126&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;td&gt;128 - 191&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;C&lt;/td&gt;
+&lt;td&gt;192 - 223&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;D&lt;/td&gt;
+&lt;td&gt;224 - 239&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;E&lt;/td&gt;
+&lt;td&gt;240 - 254&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

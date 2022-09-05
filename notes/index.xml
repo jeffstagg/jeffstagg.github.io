@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on Jeff Stagg</title>
+    <link>https://jeffstagg.github.io/notes/</link>
+    <description>Recent content in Notes on Jeff Stagg</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 24 Jul 2022 12:13:06 +0300</lastBuildDate><atom:link href="https://jeffstagg.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Starting Canon Rebel T6 DSLR Camera as Webcam</title>
+      <link>https://jeffstagg.github.io/notes/220724-dslr/</link>
+      <pubDate>Sun, 24 Jul 2022 12:13:06 +0300</pubDate>
+      
+      <guid>https://jeffstagg.github.io/notes/220724-dslr/</guid>
+      <description>Turn on camera and plug in USB. Then find your camera.
+gphoto2 --auto-detect
+When your camera is displayed, start capturing with gphoto, and output with ffmpeg.
+gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0</description>
+      <content>&lt;p&gt;Turn on camera and plug in USB. Then find your camera.&lt;br&gt;
+&lt;code&gt;gphoto2 --auto-detect&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;When your camera is displayed, start capturing with gphoto, and output with ffmpeg.&lt;br&gt;
+&lt;code&gt;gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0&lt;/code&gt;&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Regenerate Host Keys</title>
+      <link>https://jeffstagg.github.io/notes/220411-regenhosts/</link>
+      <pubDate>Sat, 11 Apr 2020 18:49:01 +0200</pubDate>
+      
+      <guid>https://jeffstagg.github.io/notes/220411-regenhosts/</guid>
+      <description>Regenerate your host keys in a new ProxMox container from template:
+sudo dpkg-reconfigure openssh-server</description>
+      <content>&lt;p&gt;Regenerate your host keys in a new ProxMox container from template:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo dpkg-reconfigure openssh-server&lt;/code&gt;&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

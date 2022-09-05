@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>resume on Jeff Stagg</title>
+    <link>https://jeffstagg.github.io/tags/resume/</link>
+    <description>Recent content in resume on Jeff Stagg</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 04 Sep 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://jeffstagg.github.io/tags/resume/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introducing the Over-Engineered Resume</title>
+      <link>https://jeffstagg.github.io/posts/220904-over-engineered-resume/</link>
+      <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
+      
+      <guid>https://jeffstagg.github.io/posts/220904-over-engineered-resume/</guid>
+      <description>Introducing the Over-Engineered Resume A common question that comes up when a developer is fresh out of college and looking for experience is, &amp;ldquo;How can I show off a project when I haven&amp;rsquo;t done anything outside of school?&amp;rdquo; It&amp;rsquo;s a valid question, and one that we all had to face at one point. How do you get that first bit of experience to get you going?
+The First Project Everyone needs a &amp;ldquo;first&amp;rdquo; project.</description>
+      <content>&lt;h1 id=&#34;introducing-the-over-engineered-resume&#34;&gt;Introducing the Over-Engineered Resume&lt;/h1&gt;
+&lt;p&gt;A common question that comes up when a developer is fresh out of college and looking for experience is, &amp;ldquo;How can I show off a project when I haven&amp;rsquo;t done anything outside of school?&amp;rdquo;
+It&amp;rsquo;s a valid question, and one that we all had to face at one point. How do you get that first bit of experience to get you going?&lt;/p&gt;
+&lt;h2 id=&#34;the-first-project&#34;&gt;The First Project&lt;/h2&gt;
+&lt;p&gt;Everyone needs a &amp;ldquo;first&amp;rdquo; project. Something you can dive into, learn new things with, and something to show off your coding style. Or build one, if you&amp;rsquo;re new to programming. My first project was a portfolio. I wanted something to show off the work that I would eventually do, and I needed something to put on github (it seemed really important to me at the time).&lt;/p&gt;
+&lt;p&gt;So, a decade later, I still recommend people build their own portfolio or resume. It&amp;rsquo;s a useful project to have, and I can&amp;rsquo;t count the amount of interviews I&amp;rsquo;ve been in where the team really doesn&amp;rsquo;t know how to gauge a developer to see how they would work with their team, so it&amp;rsquo;s helpful to have something to dive into with a development team.&lt;/p&gt;
+&lt;h2 id=&#34;the-resume&#34;&gt;The Resume&lt;/h2&gt;
+&lt;p&gt;We&amp;rsquo;re going to be building out a resume. Simple enough, yeah? Well, in premise, yes. The goal of a resume is simply to give an overview of your experience and skillset, and to start a conversation with a team to see if you can be productive together.&lt;/p&gt;
+&lt;p&gt;This project will do more than list a few keywords and try to convince a recruiter that you can bring value to their clients. I want something I can show off. I want a set of code I can be proud of to put on my public github profile. I need something I can use to play with new tech. Ever see a new tool and think &amp;ldquo;I wish I had something I could use that in&amp;rdquo;? Why not take something simple and completely over-engineer it instead?&lt;/p&gt;
+&lt;h2 id=&#34;the-plan&#34;&gt;The Plan&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;ll be building out the Over-Engineered Resume in a series of blog posts. I&amp;rsquo;ll be using the project to demonstrate techniques that I use in my work. Follow along, and show off your skills with me!&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>
