@@ -102,7 +102,7 @@
       
       
         <ul class="menu__sub-inner">
-          <li class="menu__sub-inner-more-trigger">Show more ▾</li>
+          <li class="menu__sub-inner-more-trigger"> ▾</li>
 
           <ul class="menu__sub-inner-more hidden">
             
@@ -185,37 +185,48 @@
 
 
   
-    <div class="table-of-contents">
-      <h2>
-        Contents
-      </h2>
-      <nav id="TableOfContents">
-  <ul>
-    <li><a href="#ubuntu">Ubuntu</a></li>
-  </ul>
-</nav>
-    </div>
-  
 
   <div class="post-content"><div>
         <h1 id="mounting-nfs-in-manjaro-linux">Mounting NFS in Manjaro Linux<a href="#mounting-nfs-in-manjaro-linux" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
-<p>Ensure you&rsquo;ve got nfs-utils installed to mount drive. Then create folder and add entry to <code>/etc/fstab</code></p>
+<p>I have a Synology NAS set up on my network to handle system backups and file sharing. I tend to create a lot of VMs based on Manjaro and Ubuntu, so I&rsquo;m posting the commands I use the most to get access to my share.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Network Location</td>
+<td>192.168.1.30</td>
+</tr>
+<tr>
+<td>Source Location</td>
+<td>/media/SharedFolder</td>
+</tr>
+<tr>
+<td>Mount Location</td>
+<td>/mnt/NFSDrive</td>
+</tr>
+</tbody>
+</table>
+<p>In the Manjaro client, ensure you&rsquo;ve got <code>nfs-utils</code> installed to mount the drive.  If you are running an Ubuntu client, ensure you&rsquo;ve installed <code>nfs-common</code> instead.</p>
+<p>Now create folder and add entry to <code>/etc/fstab</code></p>
 <pre><code>$&gt; pamac build nfs-utils
 $&gt; sudo mkdir /mnt/NFSDrive
 $&gt; sudo nano /etc/fstab
-</code></pre><p><code>192.168.1.xx:/remote/path	/mnt/NFSDrive	nfs	defaults	0	0</code></p>
+</code></pre><p><code>192.168.1.30:/media/SharedFolder	/mnt/NFSDrive	nfs	defaults	0	0</code></p>
 <p>Now mount your drive as root</p>
-<pre><code>$&gt; sudo mount -t nfs 192.168.1.xx:/remote/path /mnt/NFSDrive
-</code></pre><h2 id="ubuntu">Ubuntu<a href="#ubuntu" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
-<p>install <code>nfs-common</code> instead</p>
-
+<pre><code>$&gt; sudo mount -t nfs 192.168.1.30:/media/SharedFolder /mnt/NFSDrive
+</code></pre>
       </div></div>
 
   
   
 <div class="pagination">
     <div class="pagination__title">
-        <span class="pagination__title-h">Read other posts</span>
+        <span class="pagination__title-h"></span>
         <hr />
     </div>
     <div class="pagination__buttons">
@@ -252,8 +263,8 @@ $&gt; sudo nano /etc/fstab
     <footer class="footer">
   <div class="footer__inner">
     
-      <div class="copyright">
-        <span>© 2022 Powered by <a href="http://gohugo.io">Hugo</a></span>
+      <div class="copyright copyright--user">
+        <span>Copyrights are a hindrance to the positive growth of society. Intellectual Property laws create an artificial scarcity by controlling supply of the product.</span>
     
         <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
       </div>

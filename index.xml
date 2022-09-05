@@ -6,6 +6,7 @@
     <description>Recent content on Jeff Stagg</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>Copyrights are a hindrance to the positive growth of society. Intellectual Property laws create an artificial scarcity by controlling supply of the product.</copyright>
     <lastBuildDate>Sun, 04 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jeffstagg.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Introducing the Over-Engineered Resume</title>
@@ -60,21 +61,41 @@ You can also find me on &lt;a href=&#34;https://linkedin.com/in/jeffstagg&#34;&g
       <pubDate>Tue, 16 Aug 2022 18:49:01 +0200</pubDate>
       
       <guid>https://jeffstagg.com/posts/220816-nfsmounts/</guid>
-      <description>Mounting NFS in Manjaro Linux Ensure you&amp;rsquo;ve got nfs-utils installed to mount drive. Then create folder and add entry to /etc/fstab
-$&amp;gt; pamac build nfs-utils$&amp;gt; sudo mkdir /mnt/NFSDrive$&amp;gt; sudo nano /etc/fstab192.168.1.xx:/remote/path	/mnt/NFSDrive	nfs	defaults	0	0
-Now mount your drive as root
-$&amp;gt; sudo mount -t nfs 192.168.1.xx:/remote/path /mnt/NFSDriveUbuntu install nfs-common instead</description>
+      <description>Mounting NFS in Manjaro Linux I have a Synology NAS set up on my network to handle system backups and file sharing. I tend to create a lot of VMs based on Manjaro and Ubuntu, so I&amp;rsquo;m posting the commands I use the most to get access to my share.
+   Name Value     Network Location 192.168.1.30   Source Location /media/SharedFolder   Mount Location /mnt/NFSDrive    In the Manjaro client, ensure you&amp;rsquo;ve got nfs-utils installed to mount the drive.</description>
       <content>&lt;h1 id=&#34;mounting-nfs-in-manjaro-linux&#34;&gt;Mounting NFS in Manjaro Linux&lt;/h1&gt;
-&lt;p&gt;Ensure you&amp;rsquo;ve got nfs-utils installed to mount drive. Then create folder and add entry to &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I have a Synology NAS set up on my network to handle system backups and file sharing. I tend to create a lot of VMs based on Manjaro and Ubuntu, so I&amp;rsquo;m posting the commands I use the most to get access to my share.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Network Location&lt;/td&gt;
+&lt;td&gt;192.168.1.30&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Source Location&lt;/td&gt;
+&lt;td&gt;/media/SharedFolder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mount Location&lt;/td&gt;
+&lt;td&gt;/mnt/NFSDrive&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In the Manjaro client, ensure you&amp;rsquo;ve got &lt;code&gt;nfs-utils&lt;/code&gt; installed to mount the drive.  If you are running an Ubuntu client, ensure you&amp;rsquo;ve installed &lt;code&gt;nfs-common&lt;/code&gt; instead.&lt;/p&gt;
+&lt;p&gt;Now create folder and add entry to &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$&amp;gt; pamac build nfs-utils
 $&amp;gt; sudo mkdir /mnt/NFSDrive
 $&amp;gt; sudo nano /etc/fstab
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;192.168.1.xx:/remote/path	/mnt/NFSDrive	nfs	defaults	0	0&lt;/code&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;192.168.1.30:/media/SharedFolder	/mnt/NFSDrive	nfs	defaults	0	0&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now mount your drive as root&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$&amp;gt; sudo mount -t nfs 192.168.1.xx:/remote/path /mnt/NFSDrive
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;ubuntu&#34;&gt;Ubuntu&lt;/h2&gt;
-&lt;p&gt;install &lt;code&gt;nfs-common&lt;/code&gt; instead&lt;/p&gt;
-</content>
+&lt;pre&gt;&lt;code&gt;$&amp;gt; sudo mount -t nfs 192.168.1.30:/media/SharedFolder /mnt/NFSDrive
+&lt;/code&gt;&lt;/pre&gt;</content>
     </item>
     
     <item>
