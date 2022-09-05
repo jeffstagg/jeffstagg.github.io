@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>job-hunting on Jeff Stagg</title>
-    <link>https://jeffstagg.github.io/tags/job-hunting/</link>
+    <link>https://jeffstagg.com/tags/job-hunting/</link>
     <description>Recent content in job-hunting on Jeff Stagg</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Sep 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://jeffstagg.github.io/tags/job-hunting/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Sep 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://jeffstagg.com/tags/job-hunting/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Introducing the Over-Engineered Resume</title>
-      <link>https://jeffstagg.github.io/posts/220904-over-engineered-resume/</link>
+      <link>https://jeffstagg.com/posts/220904-over-engineered-resume/</link>
       <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
       
-      <guid>https://jeffstagg.github.io/posts/220904-over-engineered-resume/</guid>
+      <guid>https://jeffstagg.com/posts/220904-over-engineered-resume/</guid>
       <description>Introducing the Over-Engineered Resume A common question that comes up when a developer is fresh out of college and looking for experience is, &amp;ldquo;How can I show off a project when I haven&amp;rsquo;t done anything outside of school?&amp;rdquo; It&amp;rsquo;s a valid question, and one that we all had to face at one point. How do you get that first bit of experience to get you going?
 The First Project Everyone needs a &amp;ldquo;first&amp;rdquo; project.</description>
       <content>&lt;h1 id=&#34;introducing-the-over-engineered-resume&#34;&gt;Introducing the Over-Engineered Resume&lt;/h1&gt;

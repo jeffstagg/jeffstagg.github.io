@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>index on Jeff Stagg</title>
-    <link>https://jeffstagg.github.io/tags/index/</link>
+    <link>https://jeffstagg.com/tags/index/</link>
     <description>Recent content in index on Jeff Stagg</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://jeffstagg.github.io/tags/index/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://jeffstagg.com/tags/index/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Posts</title>
-      <link>https://jeffstagg.github.io/posts/</link>
+      <link>https://jeffstagg.com/posts/</link>
       <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
       
-      <guid>https://jeffstagg.github.io/posts/</guid>
+      <guid>https://jeffstagg.com/posts/</guid>
       <description></description>
       <content></content>
     </item>
     
     <item>
       <title>Notes</title>
-      <link>https://jeffstagg.github.io/notes/</link>
+      <link>https://jeffstagg.com/notes/</link>
       <pubDate>Sun, 24 Jul 2022 12:13:06 +0300</pubDate>
       
-      <guid>https://jeffstagg.github.io/notes/</guid>
+      <guid>https://jeffstagg.com/notes/</guid>
       <description></description>
       <content></content>
     </item>

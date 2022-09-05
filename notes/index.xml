@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Notes on Jeff Stagg</title>
-    <link>https://jeffstagg.github.io/notes/</link>
+    <link>https://jeffstagg.com/notes/</link>
     <description>Recent content in Notes on Jeff Stagg</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 Jul 2022 12:13:06 +0300</lastBuildDate><atom:link href="https://jeffstagg.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Jul 2022 12:13:06 +0300</lastBuildDate><atom:link href="https://jeffstagg.com/notes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Starting Canon Rebel T6 DSLR Camera as Webcam</title>
-      <link>https://jeffstagg.github.io/notes/220724-dslr/</link>
+      <link>https://jeffstagg.com/notes/220724-dslr/</link>
       <pubDate>Sun, 24 Jul 2022 12:13:06 +0300</pubDate>
       
-      <guid>https://jeffstagg.github.io/notes/220724-dslr/</guid>
+      <guid>https://jeffstagg.com/notes/220724-dslr/</guid>
       <description>Turn on camera and plug in USB. Then find your camera.
 gphoto2 --auto-detect
 When your camera is displayed, start capturing with gphoto, and output with ffmpeg.
@@ -26,10 +26,10 @@ gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p
     
     <item>
       <title>Regenerate Host Keys</title>
-      <link>https://jeffstagg.github.io/notes/220411-regenhosts/</link>
+      <link>https://jeffstagg.com/notes/220411-regenhosts/</link>
       <pubDate>Sat, 11 Apr 2020 18:49:01 +0200</pubDate>
       
-      <guid>https://jeffstagg.github.io/notes/220411-regenhosts/</guid>
+      <guid>https://jeffstagg.com/notes/220411-regenhosts/</guid>
       <description>Regenerate your host keys in a new ProxMox container from template:
 sudo dpkg-reconfigure openssh-server</description>
       <content>&lt;p&gt;Regenerate your host keys in a new ProxMox container from template:&lt;/p&gt;

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>azure on Jeff Stagg</title>
-    <link>https://jeffstagg.github.io/tags/azure/</link>
+    <link>https://jeffstagg.com/tags/azure/</link>
     <description>Recent content in azure on Jeff Stagg</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jeffstagg.github.io/tags/azure/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 15 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jeffstagg.com/tags/azure/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Deploying Hugo Site to Azure with Bicep</title>
-      <link>https://jeffstagg.github.io/posts/220515-bicep-azure-hugo/</link>
+      <link>https://jeffstagg.com/posts/220515-bicep-azure-hugo/</link>
       <pubDate>Sun, 15 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://jeffstagg.github.io/posts/220515-bicep-azure-hugo/</guid>
+      <guid>https://jeffstagg.com/posts/220515-bicep-azure-hugo/</guid>
       <description>When in doubt, over-engineer I ran into a bit of a delimma. I want to automate a deployment using infrastructure as code, but I don&amp;rsquo;t have a project to use it on. So I thought, &amp;ldquo;why not over-engineer a blog?&amp;rdquo; So that&amp;rsquo;s what this is.
 I&amp;rsquo;ve got a few goals for this project:
  Start a blog, a place to put thoughts Have a collection of code snippets and neat projects to show off Use aBicep to deploy a collection of services to Azure Test out the Static Website service in Azure Demonstrate continuous integration  Code snippets:</description>

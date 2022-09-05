@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tech on Jeff Stagg</title>
-    <link>https://jeffstagg.github.io/categories/tech/</link>
+    <link>https://jeffstagg.com/categories/tech/</link>
     <description>Recent content in tech on Jeff Stagg</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Sep 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://jeffstagg.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Sep 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://jeffstagg.com/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Introducing the Over-Engineered Resume</title>
-      <link>https://jeffstagg.github.io/posts/220904-over-engineered-resume/</link>
+      <link>https://jeffstagg.com/posts/220904-over-engineered-resume/</link>
       <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
       
-      <guid>https://jeffstagg.github.io/posts/220904-over-engineered-resume/</guid>
+      <guid>https://jeffstagg.com/posts/220904-over-engineered-resume/</guid>
       <description>Introducing the Over-Engineered Resume A common question that comes up when a developer is fresh out of college and looking for experience is, &amp;ldquo;How can I show off a project when I haven&amp;rsquo;t done anything outside of school?&amp;rdquo; It&amp;rsquo;s a valid question, and one that we all had to face at one point. How do you get that first bit of experience to get you going?
 The First Project Everyone needs a &amp;ldquo;first&amp;rdquo; project.</description>
       <content>&lt;h1 id=&#34;introducing-the-over-engineered-resume&#34;&gt;Introducing the Over-Engineered Resume&lt;/h1&gt;
@@ -31,10 +31,10 @@ It&amp;rsquo;s a valid question, and one that we all had to face at one point. H
     
     <item>
       <title>NFS Mounts in Linux Filesystems</title>
-      <link>https://jeffstagg.github.io/posts/220816-nfsmounts/</link>
+      <link>https://jeffstagg.com/posts/220816-nfsmounts/</link>
       <pubDate>Tue, 16 Aug 2022 18:49:01 +0200</pubDate>
       
-      <guid>https://jeffstagg.github.io/posts/220816-nfsmounts/</guid>
+      <guid>https://jeffstagg.com/posts/220816-nfsmounts/</guid>
       <description>Mounting NFS in Manjaro Linux Ensure you&amp;rsquo;ve got nfs-utils installed to mount drive. Then create folder and add entry to /etc/fstab
 $&amp;gt; pamac build nfs-utils$&amp;gt; sudo mkdir /mnt/NFSDrive$&amp;gt; sudo nano /etc/fstab192.168.1.xx:/remote/path	/mnt/NFSDrive	nfs	defaults	0	0
 Now mount your drive as root
@@ -54,10 +54,10 @@ $&amp;gt; sudo nano /etc/fstab
     
     <item>
       <title>Network&#43; Study Notes</title>
-      <link>https://jeffstagg.github.io/posts/220517-network-plus/</link>
+      <link>https://jeffstagg.com/posts/220517-network-plus/</link>
       <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://jeffstagg.github.io/posts/220517-network-plus/</guid>
+      <guid>https://jeffstagg.com/posts/220517-network-plus/</guid>
       <description>Background I&amp;rsquo;m studying for the CompTIA Network+ N10-008 exam. There&amp;rsquo;s a LOT of material, so I&amp;rsquo;ll use this page to organize notes on what I used to study, how I went about it, and helpful charts I&amp;rsquo;ll use to memorize the needful.
 When I was in high school, I took a Cisco certification course. We offered it as an elective at our school to try to get more kids into tech.</description>
       <content>&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
@@ -135,10 +135,10 @@ I&amp;rsquo;m reading a chapter in the All In One book, then watching the corres
     
     <item>
       <title>Deploying Hugo Site to Azure with Bicep</title>
-      <link>https://jeffstagg.github.io/posts/220515-bicep-azure-hugo/</link>
+      <link>https://jeffstagg.com/posts/220515-bicep-azure-hugo/</link>
       <pubDate>Sun, 15 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://jeffstagg.github.io/posts/220515-bicep-azure-hugo/</guid>
+      <guid>https://jeffstagg.com/posts/220515-bicep-azure-hugo/</guid>
       <description>When in doubt, over-engineer I ran into a bit of a delimma. I want to automate a deployment using infrastructure as code, but I don&amp;rsquo;t have a project to use it on. So I thought, &amp;ldquo;why not over-engineer a blog?&amp;rdquo; So that&amp;rsquo;s what this is.
 I&amp;rsquo;ve got a few goals for this project:
  Start a blog, a place to put thoughts Have a collection of code snippets and neat projects to show off Use aBicep to deploy a collection of services to Azure Test out the Static Website service in Azure Demonstrate continuous integration  Code snippets:</description>
