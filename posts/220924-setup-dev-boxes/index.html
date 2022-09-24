@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Over-Engineered Resume - Setting Up a Development Environment :: Jeff Stagg</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Provisioning a development environment with .Net 6, the Azure CLI, and Docker, using Vagrant and Ansible." />
+<meta name="keywords" content="tech" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://jeffstagg.com/posts/220924-setup-dev-boxes/" />
+
+
+
+
+<link rel="stylesheet" href="https://jeffstagg.com/assets/style.css">
+
+  <link rel="stylesheet" href="https://jeffstagg.com/assets/blue.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon" href="https://jeffstagg.com/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="https://jeffstagg.com/img/favicon/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Over-Engineered Resume - Setting Up a Development Environment">
+<meta property="og:description" content="Provisioning a development environment with .Net 6, the Azure CLI, and Docker, using Vagrant and Ansible." />
+<meta property="og:url" content="https://jeffstagg.com/posts/220924-setup-dev-boxes/" />
+<meta property="og:site_name" content="Jeff Stagg" />
+
+  
+    <meta property="og:image" content="https://jeffstagg.com/img/favicon/blue.png">
+  
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+
+  <meta property="article:published_time" content="2022-09-24 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Jeff Stagg
+  </div>
+</a>
+
+    </div>
+    
+      <div class="menu-trigger">menu</div>
+    
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/">Home</a></li>
+        
+      
+        
+          <li><a href="/posts/">Blog</a></li>
+        
+      
+        
+          <li><a href="/notes/">Notes</a></li>
+        
+      
+      
+        <ul class="menu__sub-inner">
+          <li class="menu__sub-inner-more-trigger"> ▾</li>
+
+          <ul class="menu__sub-inner-more hidden">
+            
+              
+                <li><a href="/tags/">Tags</a></li>
+              
+            
+              
+                <li><a href="/index.xml">RSS</a></li>
+              
+            
+          </ul>
+        </ul>
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/">Home</a></li>
+      
+    
+      
+        <li><a href="/posts/">Blog</a></li>
+      
+    
+      
+        <li><a href="/notes/">Notes</a></li>
+      
+    
+      
+        <li><a href="/tags/">Tags</a></li>
+      
+    
+      
+        <li><a href="/index.xml">RSS</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="https://jeffstagg.com/posts/220924-setup-dev-boxes/">Over-Engineered Resume - Setting Up a Development Environment</a></h1>
+  <div class="post-meta">
+    
+      <span class="post-date">
+        2022-09-24
+        
+      </span>
+    
+    
+      <span class="post-author">:: Jeff Stagg</span>
+    
+    
+  </div>
+
+  
+  <span class="post-tags">
+    
+    #<a href="https://jeffstagg.com/tags/resume/">resume</a>&nbsp;
+    
+  </span>
+  
+  
+
+
+  
+    <div class="table-of-contents">
+      <h2>
+        Contents
+      </h2>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#installing-the-necessary-tools">Installing the Necessary Tools</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#provisioning-our-dev-environment">Provisioning our Dev Environment</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#launching-our-environment">Launching our Environment</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+  </ul>
+</nav>
+    </div>
+  
+
+  <div class="post-content"><div>
+        <h1 id="over-engineered-resume---setting-up-a-development-environment">Over-Engineered Resume - Setting Up a Development Environment<a href="#over-engineered-resume---setting-up-a-development-environment" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>First thing&rsquo;s first, we&rsquo;ll need a dev environment. I want to be able to work on this from a laptop running Arch, and a desktop that is either booted into a Windows session or an Arch session. We&rsquo;re going to start out with an API built in dotnet 6 and decide how to display it later. Let&rsquo;s set up a Vagrant box and throw Ubuntu on it and provision .Net and Azure on it with Ansible to get it running locally. We can forward the port and work in a local text editor since that&rsquo;s one of the first things I ever install on a system.</p>
+<p>For virtualization on workstations, I use VirtualBox as my hypervisor. If you&rsquo;re running windows, it&rsquo;s as simple as downloading the installer and running through the simple wizard. If you&rsquo;re running Arch, I&rsquo;ve created a post that details the few steps you need to take. Next, you&rsquo;ll want Vagrant. We use Vagrant to build our virtual environments through code, and we can provision our dev box by writing an Ansible playbook. On the dev box, we&rsquo;ll need Dotnet 6, the Azure CLI, and Docker.</p>
+<h2 id="installing-the-necessary-tools">Installing the Necessary Tools<a href="#installing-the-necessary-tools" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<h4 id="install-virtualbox">Install VirtualBox<a href="#install-virtualbox" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>If you&rsquo;re running Windows, this is as simple as <a href="https://www.virtualbox.org/wiki/Downloads">downloading the installer </a> and running through the wizard. Make sure you allow virtualization in your BIOS. You&rsquo;ll receive errors in the installer if virtualization is not enabled through your system firmware.</p>
+<p>For Arch users, it gets a bit trickier. First, make sure virtualization is enabled in your BIOS by running the following:<br>
+<code>grep -E --color 'vmx|svm' /proc/cpuinfo</code></p>
+<p>If you see either &lsquo;svm&rsquo; or &lsquo;vmx&rsquo; highlighted in a colored console, then you&rsquo;re good to go. Otherwise, reboot and edit your system BIOS before going any further.</p>
+<p>Let&rsquo;s update Pacman, because you totally ran <code>pacman -Syu</code> this morning but just to settle any nerves in case something was updated while we had coffee, let&rsquo;s run :</p>
+<p><code>sudo pacman -Sy</code></p>
+<p>Arch maintains a <code>virtualbox</code> package. You&rsquo;ll have an option to choose your host modules, and your kernel determines which you install. If you&rsquo;re running the Linux kernel, choose <code>virtualbox-host-modules-arch</code>. Otherwise, go with <code>virtualbox-host-dkms</code>.</p>
+<p><code>sudo pacman -S virtualbox</code> -&gt; <code>2) virtualbox-host-modules-arch</code></p>
+<p>After installation, assuming no errors, you can try running the <code>virtualbox</code> command, and will be told that the vboxdrv kernel module is not loaded. To load it at boot, let&rsquo;s create a file at /etc/modules-load.d/.</p>
+<p><code>sudo nano /etc/modules-load.d/virtualbox.conf</code></p>
+<p>In the file, simply input</p>
+<p><code>vboxdrv</code></p>
+<p>Close the file, and let&rsquo;s add our user to the <strong>vboxusers</strong> group.</p>
+<p><code>sudo usermod -aG vboxusers $(whoami)</code></p>
+<p>Now let&rsquo;s reboot the computer, and virtualbox should be installed and good to go. Try running it through the console, so that if any errors arise, they&rsquo;re easier to see.</p>
+<p><code>virtualbox</code></p>
+<p>If you are greeted with a GUI and no errors in the console, congratulations, you&rsquo;re ready to install Vagrant. Feel free to download the <a href="https://www.virtualbox.org/wiki/Downloads">VM VirtualBox Extension Pack</a> as well. When you open VirtualBox, you can click File &gt; Preferences &gt; Extensions &gt; Add, and select the downloaded file. I usually add it for USB support in VMs, but we won&rsquo;t be needing it for this project.</p>
+<p>If you have permissions issues when trying to install the extension pack, close out of the Virtualbox GUI, and relaunch with privileges</p>
+<p><code>sudo virtualbox</code></p>
+<p>Then install the expansion pack.</p>
+<h4 id="installing-vagrant">Installing Vagrant<a href="#installing-vagrant" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p><a href="https://www.vagrantup.com/downloads">Vagrant</a> is the easy one to install. If you&rsquo;re in Windows, download the file for your appropriate architecture and run the installer. If you&rsquo;re running Arch, just run<br>
+<code>sudo pacman -S vagrant</code></p>
+<p>At this point, the only thing we need is a text editor if you don&rsquo;t already have one installed. Any one will do.</p>
+<h2 id="provisioning-our-dev-environment">Provisioning our Dev Environment<a href="#provisioning-our-dev-environment" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Since we&rsquo;ll be using dotnet 6 to build our API, and will be deploying onto Azure, let&rsquo;s set those up to be installed on our dev box when it&rsquo;s provisioned. We don&rsquo;t have a full plan to launch yet, but I know I want to ship it in a container, so let&rsquo;s install Docker as well. These things can always change later when we decide to over-engineer our deployments.</p>
+<h4 id="provisioning-with-ansible">Provisioning with Ansible<a href="#provisioning-with-ansible" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Let&rsquo;s create our Vagrantfile, and use <code>ansible_local</code> to provision so that we don&rsquo;t have to set up an ansible host yet.</p>
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+    config.vm.box = &quot;bento/ubuntu-22.04&quot;
+    config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080
+  
+    config.vm.provision &quot;ansible_local&quot; do |ansible|
+        ansible.playbook = &quot;playbook.yml&quot;
+      end
+end
+</code></pre><p>Next, let&rsquo;s create the <code>playbook.yml</code> file.</p>
+<pre><code>---
+- hosts: all
+  become: true
+  vars:
+    container_count: 4
+    default_container_name: docker
+    default_container_image: ubuntu
+    default_container_command: sleep 1
+  tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+  
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+          - acl
+        state: latest
+        update_cache: true
+
+	- name: Create User
+	  ansible.builtin.user:
+	  name: jeff
+	  comment: Jeff Stagg
+	  uid: 1010
+	  group: sudo
+
+    - name: Install development SDKs
+      apt:
+        pkg:
+          - dotnet6
+
+    - name: Install Azure CLI
+      ansible.builtin.shell: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      become: yes
+      become_user: jeff
+  
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+  
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+  
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+  
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+        
+    - name: Pull default Docker image
+      community.docker.docker_image:
+        name: &quot;{{ default_container_image }}&quot;
+        source: pull
+  
+    - name: Create default containers
+      community.docker.docker_container:
+        name: &quot;{{ default_container_name }}{{ item }}&quot;
+        image: &quot;{{ default_container_image }}&quot;
+        command: &quot;{{ default_container_command }}&quot;
+        state: present
+      with_sequence: count={{ container_count }}
+</code></pre><p>Let&rsquo;s go over our playbook:</p>
+<p>First we grab the latest from apt, and install system packages. These are just basic things we do to a new Ubuntu installation anyway. We don&rsquo;t really need git in our environment, as we&rsquo;ll already have it installed on our host, and we won&rsquo;t have to worry about setting up a user and messing with SSH keys in our temporary dev box.</p>
+<p>Next we set up dotnet6, which will give us our dev tools. To install the Azure CLI from the one-liner script they provide, we have to run the command as a non-root user. So we create a user using the built-in user component, assign it to group <strong>sudo</strong> and use the <code>become_user</code> property to de-escalate our user, in order to run the Microsoft script to install the Azure CLI.</p>
+<p>Now that our tools are ready to build our code and deploy our infrastructure, we install Docker to help with deployment.</p>
+<h2 id="launching-our-environment">Launching our Environment<a href="#launching-our-environment" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Now that we have the tools we need in our environment, let&rsquo;s spin up our new dev box with the command</p>
+<p><code>vagrant up</code></p>
+<p>This will download Ubuntu into a new Virtualbox VM, then run through our Ansible playbook to install all of the tools we&rsquo;ll need for this project. We can enter our dev box through SSH by using the command</p>
+<p><code>vagrant ssh</code></p>
+<p>Your username and password are <code>vagrant / vagrant</code>.</p>
+<p>Let&rsquo;s test that our tools are working by running:</p>
+<p><code>dotnet --version</code></p>
+<pre><code>vagrant@vagrant:~$ dotnet --version
+6.0.109
+</code></pre><p><code>az -v</code></p>
+<pre><code>vagrant@vagrant:~$ az -v
+azure-cli                         2.40.0
+
+core                              2.40.0
+telemetry                          1.0.8
+
+Dependencies:
+msal                            1.18.0b1
+azure-mgmt-resource             21.1.0b1
+
+Python location '/opt/az/bin/python3'
+Extensions directory '/home/vagrant/.azure/cliextensions'
+
+Python (Linux) 3.10.5 (main, Sep  2 2022, 05:41:19) [GCC 11.2.0]
+
+Legal docs and information: aka.ms/AzureCliLegal
+
+
+Your CLI is up-to-date.
+</code></pre><p><code>sudo docker ps -a</code></p>
+<pre><code>vagrant@vagrant:~$ sudo docker ps -a 
+CONTAINER ID   IMAGE     COMMAND     CREATED         STATUS    PORTS     NAMES
+3c85a5007e7a   ubuntu    &quot;sleep 1&quot;   8 minutes ago   Created             docker4
+872783464fe9   ubuntu    &quot;sleep 1&quot;   8 minutes ago   Created             docker3
+8311acc96a3f   ubuntu    &quot;sleep 1&quot;   8 minutes ago   Created             docker2
+5942c514536e   ubuntu    &quot;sleep 1&quot;   8 minutes ago   Created             docker1
+</code></pre><p>If all is good, let&rsquo;s move on to Building Our Project Framework.</p>
+<h2 id="troubleshooting">Troubleshooting<a href="#troubleshooting" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>I ran into the following error:</p>
+<pre><code>==&gt; default: Running provisioner: ansible_local...
+    default: Installing Ansible...
+The following SSH command responded with a non-zero exit status.
+Vagrant assumes that this means the command failed!
+
+
+                add-apt-repository ppa:ansible/ansible -y &amp;&amp;                 apt-get update -y -qq &amp;&amp;                 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ansible --option &quot;Dpkg::Options::=--force-confold&quot;
+              
+
+Stdout from the command:
+
+Hit:1 http://in.archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://in.archive.ubuntu.com/ubuntu jammy-updates InRelease [114 kB]
+Get:3 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu jammy InRelease [18.0 kB]
+Get:4 http://in.archive.ubuntu.com/ubuntu jammy-backports InRelease [99.8 kB]
+Get:5 http://in.archive.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:6 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu jammy/main amd64 Packages [1,128 B]
+Get:7 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu jammy/main Translation-en [756 B]
+Reading package lists...
+Repository: 'deb https://ppa.launchpadcontent.net/ansible/ansible/ubuntu/ jammy main'
+Description:
+Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy. Avoid writing scripts or custom code to deploy and update your applications— automate in a language that approaches plain English, using SSH, with no agents to install on remote systems.
+
+http://ansible.com/
+
+If you face any issues while installing Ansible PPA, file an issue here:
+https://github.com/ansible-community/ppa/issues
+More info: https://launchpad.net/~ansible/+archive/ubuntu/ansible
+Adding repository.
+Adding deb entry to /etc/apt/sources.list.d/ansible-ubuntu-ansible-jammy.list
+Adding disabled deb-src entry to /etc/apt/sources.list.d/ansible-ubuntu-ansible-jammy.list
+Adding key to /etc/apt/trusted.gpg.d/ansible-ubuntu-ansible.gpg with fingerprint 6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367
+
+
+Stderr from the command:
+
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-updates/InRelease is not valid yet (invalid for another 4h 12min 3s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-backports/InRelease is not valid yet (invalid for another 3h 14min 10s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-security/InRelease is not valid yet (invalid for another 4h 11min 51s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-updates/InRelease is not valid yet (invalid for another 4h 11min 59s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-backports/InRelease is not valid yet (invalid for another 3h 14min 6s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-security/InRelease is not valid yet (invalid for another 4h 11min 47s). Updates for this repository will not be applied.
+</code></pre><p>This tells me that my system clock is off. I get this a lot when things go awry dual-booting Windows and Arch on the same box. I set my system time with the following command:</p>
+<p><code># timedatectl set-time &quot;2022-09-24 09:58:54&quot;</code></p>
+<p>Then I was able to run <code>vagrant provision</code> to finish setting up my dev box and run through the playbook.</p>
+
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h"></span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        
+        <span class="button next">
+            <a href="https://jeffstagg.com/posts/220904-over-engineered-resume/">
+                <span class="button__text">Introducing the Over-Engineered Resume</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+  
+
+  
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright copyright--user">
+        <span>Intellectual Property laws create an artificial scarcity by controlling supply of the product.</span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="https://jeffstagg.com/assets/main.js"></script>
+<script src="https://jeffstagg.com/assets/prism.js"></script>
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

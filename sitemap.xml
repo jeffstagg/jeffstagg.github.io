@@ -3,48 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jeffstagg.com/categories/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
+    <loc>https://jeffstagg.com/</loc>
+    <lastmod>2022-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jeffstagg.com/tags/code-samples/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffstagg.com/posts/220904-over-engineered-resume/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffstagg.com/tags/portfolio-building/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
+    <loc>https://jeffstagg.com/posts/220924-setup-dev-boxes/</loc>
+    <lastmod>2022-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://jeffstagg.com/posts/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
+    <lastmod>2022-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://jeffstagg.com/tags/resume/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
+    <lastmod>2022-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://jeffstagg.com/tags/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffstagg.com/categories/tech/</loc>
-    <lastmod>2022-09-04T00:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jeffstagg.com/</loc>
-    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+    <lastmod>2022-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -54,6 +34,31 @@
   
   <url>
     <loc>https://jeffstagg.com/about/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffstagg.com/categories/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffstagg.com/tags/code-samples/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffstagg.com/posts/220904-over-engineered-resume/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffstagg.com/tags/portfolio-building/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jeffstagg.com/categories/tech/</loc>
     <lastmod>2022-09-04T00:00:00+00:00</lastmod>
   </url>
   
