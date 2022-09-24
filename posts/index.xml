@@ -7,11 +7,231 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Intellectual Property laws create an artificial scarcity by controlling supply of the product.</copyright>
-    <lastBuildDate>Sun, 04 Sep 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://jeffstagg.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 24 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jeffstagg.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Over-Engineered Resume - Setting Up a Development Environment</title>
+      <link>https://jeffstagg.com/posts/220924-setup-dev-boxes/</link>
+      <pubDate>Sat, 24 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffstagg.com/posts/220924-setup-dev-boxes/</guid>
+      <description>Over-Engineered Resume - Setting Up a Development Environment First thing&amp;rsquo;s first, we&amp;rsquo;ll need a dev environment. I want to be able to work on this from a laptop running Arch, and a desktop that is either booted into a Windows session or an Arch session. We&amp;rsquo;re going to start out with an API built in dotnet 6 and decide how to display it later. Let&amp;rsquo;s set up a Vagrant box and throw Ubuntu on it and provision .</description>
+      <content>&lt;h1 id=&#34;over-engineered-resume---setting-up-a-development-environment&#34;&gt;Over-Engineered Resume - Setting Up a Development Environment&lt;/h1&gt;
+&lt;p&gt;First thing&amp;rsquo;s first, we&amp;rsquo;ll need a dev environment. I want to be able to work on this from a laptop running Arch, and a desktop that is either booted into a Windows session or an Arch session. We&amp;rsquo;re going to start out with an API built in dotnet 6 and decide how to display it later. Let&amp;rsquo;s set up a Vagrant box and throw Ubuntu on it and provision .Net and Azure on it with Ansible to get it running locally. We can forward the port and work in a local text editor since that&amp;rsquo;s one of the first things I ever install on a system.&lt;/p&gt;
+&lt;p&gt;For virtualization on workstations, I use VirtualBox as my hypervisor. If you&amp;rsquo;re running windows, it&amp;rsquo;s as simple as downloading the installer and running through the simple wizard. If you&amp;rsquo;re running Arch, I&amp;rsquo;ve created a post that details the few steps you need to take. Next, you&amp;rsquo;ll want Vagrant. We use Vagrant to build our virtual environments through code, and we can provision our dev box by writing an Ansible playbook. On the dev box, we&amp;rsquo;ll need Dotnet 6, the Azure CLI, and Docker.&lt;/p&gt;
+&lt;h2 id=&#34;installing-the-necessary-tools&#34;&gt;Installing the Necessary Tools&lt;/h2&gt;
+&lt;h4 id=&#34;install-virtualbox&#34;&gt;Install VirtualBox&lt;/h4&gt;
+&lt;p&gt;If you&amp;rsquo;re running Windows, this is as simple as &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;downloading the installer &lt;/a&gt; and running through the wizard. Make sure you allow virtualization in your BIOS. You&amp;rsquo;ll receive errors in the installer if virtualization is not enabled through your system firmware.&lt;/p&gt;
+&lt;p&gt;For Arch users, it gets a bit trickier. First, make sure virtualization is enabled in your BIOS by running the following:&lt;br&gt;
+&lt;code&gt;grep -E --color &#39;vmx|svm&#39; /proc/cpuinfo&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If you see either &amp;lsquo;svm&amp;rsquo; or &amp;lsquo;vmx&amp;rsquo; highlighted in a colored console, then you&amp;rsquo;re good to go. Otherwise, reboot and edit your system BIOS before going any further.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s update Pacman, because you totally ran &lt;code&gt;pacman -Syu&lt;/code&gt; this morning but just to settle any nerves in case something was updated while we had coffee, let&amp;rsquo;s run :&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo pacman -Sy&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Arch maintains a &lt;code&gt;virtualbox&lt;/code&gt; package. You&amp;rsquo;ll have an option to choose your host modules, and your kernel determines which you install. If you&amp;rsquo;re running the Linux kernel, choose &lt;code&gt;virtualbox-host-modules-arch&lt;/code&gt;. Otherwise, go with &lt;code&gt;virtualbox-host-dkms&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo pacman -S virtualbox&lt;/code&gt; -&amp;gt; &lt;code&gt;2) virtualbox-host-modules-arch&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;After installation, assuming no errors, you can try running the &lt;code&gt;virtualbox&lt;/code&gt; command, and will be told that the vboxdrv kernel module is not loaded. To load it at boot, let&amp;rsquo;s create a file at /etc/modules-load.d/.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo nano /etc/modules-load.d/virtualbox.conf&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In the file, simply input&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vboxdrv&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Close the file, and let&amp;rsquo;s add our user to the &lt;strong&gt;vboxusers&lt;/strong&gt; group.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo usermod -aG vboxusers $(whoami)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now let&amp;rsquo;s reboot the computer, and virtualbox should be installed and good to go. Try running it through the console, so that if any errors arise, they&amp;rsquo;re easier to see.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;virtualbox&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If you are greeted with a GUI and no errors in the console, congratulations, you&amp;rsquo;re ready to install Vagrant. Feel free to download the &lt;a href=&#34;https://www.virtualbox.org/wiki/Downloads&#34;&gt;VM VirtualBox Extension Pack&lt;/a&gt; as well. When you open VirtualBox, you can click File &amp;gt; Preferences &amp;gt; Extensions &amp;gt; Add, and select the downloaded file. I usually add it for USB support in VMs, but we won&amp;rsquo;t be needing it for this project.&lt;/p&gt;
+&lt;p&gt;If you have permissions issues when trying to install the extension pack, close out of the Virtualbox GUI, and relaunch with privileges&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo virtualbox&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Then install the expansion pack.&lt;/p&gt;
+&lt;h4 id=&#34;installing-vagrant&#34;&gt;Installing Vagrant&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads&#34;&gt;Vagrant&lt;/a&gt; is the easy one to install. If you&amp;rsquo;re in Windows, download the file for your appropriate architecture and run the installer. If you&amp;rsquo;re running Arch, just run&lt;br&gt;
+&lt;code&gt;sudo pacman -S vagrant&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;At this point, the only thing we need is a text editor if you don&amp;rsquo;t already have one installed. Any one will do.&lt;/p&gt;
+&lt;h2 id=&#34;provisioning-our-dev-environment&#34;&gt;Provisioning our Dev Environment&lt;/h2&gt;
+&lt;p&gt;Since we&amp;rsquo;ll be using dotnet 6 to build our API, and will be deploying onto Azure, let&amp;rsquo;s set those up to be installed on our dev box when it&amp;rsquo;s provisioned. We don&amp;rsquo;t have a full plan to launch yet, but I know I want to ship it in a container, so let&amp;rsquo;s install Docker as well. These things can always change later when we decide to over-engineer our deployments.&lt;/p&gt;
+&lt;h4 id=&#34;provisioning-with-ansible&#34;&gt;Provisioning with Ansible&lt;/h4&gt;
+&lt;p&gt;Let&amp;rsquo;s create our Vagrantfile, and use &lt;code&gt;ansible_local&lt;/code&gt; to provision so that we don&amp;rsquo;t have to set up an ansible host yet.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Vagrant.configure(&amp;quot;2&amp;quot;) do |config|
+    config.vm.box = &amp;quot;bento/ubuntu-22.04&amp;quot;
+    config.vm.network &amp;quot;forwarded_port&amp;quot;, guest: 80, host: 8080
+  
+    config.vm.provision &amp;quot;ansible_local&amp;quot; do |ansible|
+        ansible.playbook = &amp;quot;playbook.yml&amp;quot;
+      end
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Next, let&amp;rsquo;s create the &lt;code&gt;playbook.yml&lt;/code&gt; file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+- hosts: all
+  become: true
+  vars:
+    container_count: 4
+    default_container_name: docker
+    default_container_image: ubuntu
+    default_container_command: sleep 1
+  tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+  
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+          - acl
+        state: latest
+        update_cache: true
+
+	- name: Create User
+	  ansible.builtin.user:
+	  name: jeff
+	  comment: Jeff Stagg
+	  uid: 1010
+	  group: sudo
+
+    - name: Install development SDKs
+      apt:
+        pkg:
+          - dotnet6
+
+    - name: Install Azure CLI
+      ansible.builtin.shell: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      become: yes
+      become_user: jeff
+  
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+  
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+  
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+  
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+        
+    - name: Pull default Docker image
+      community.docker.docker_image:
+        name: &amp;quot;{{ default_container_image }}&amp;quot;
+        source: pull
+  
+    - name: Create default containers
+      community.docker.docker_container:
+        name: &amp;quot;{{ default_container_name }}{{ item }}&amp;quot;
+        image: &amp;quot;{{ default_container_image }}&amp;quot;
+        command: &amp;quot;{{ default_container_command }}&amp;quot;
+        state: present
+      with_sequence: count={{ container_count }}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Let&amp;rsquo;s go over our playbook:&lt;/p&gt;
+&lt;p&gt;First we grab the latest from apt, and install system packages. These are just basic things we do to a new Ubuntu installation anyway. We don&amp;rsquo;t really need git in our environment, as we&amp;rsquo;ll already have it installed on our host, and we won&amp;rsquo;t have to worry about setting up a user and messing with SSH keys in our temporary dev box.&lt;/p&gt;
+&lt;p&gt;Next we set up dotnet6, which will give us our dev tools. To install the Azure CLI from the one-liner script they provide, we have to run the command as a non-root user. So we create a user using the built-in user component, assign it to group &lt;strong&gt;sudo&lt;/strong&gt; and use the &lt;code&gt;become_user&lt;/code&gt; property to de-escalate our user, in order to run the Microsoft script to install the Azure CLI.&lt;/p&gt;
+&lt;p&gt;Now that our tools are ready to build our code and deploy our infrastructure, we install Docker to help with deployment.&lt;/p&gt;
+&lt;h2 id=&#34;launching-our-environment&#34;&gt;Launching our Environment&lt;/h2&gt;
+&lt;p&gt;Now that we have the tools we need in our environment, let&amp;rsquo;s spin up our new dev box with the command&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vagrant up&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will download Ubuntu into a new Virtualbox VM, then run through our Ansible playbook to install all of the tools we&amp;rsquo;ll need for this project. We can enter our dev box through SSH by using the command&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vagrant ssh&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Your username and password are &lt;code&gt;vagrant / vagrant&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s test that our tools are working by running:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dotnet --version&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vagrant@vagrant:~$ dotnet --version
+6.0.109
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;az -v&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vagrant@vagrant:~$ az -v
+azure-cli                         2.40.0
+
+core                              2.40.0
+telemetry                          1.0.8
+
+Dependencies:
+msal                            1.18.0b1
+azure-mgmt-resource             21.1.0b1
+
+Python location &#39;/opt/az/bin/python3&#39;
+Extensions directory &#39;/home/vagrant/.azure/cliextensions&#39;
+
+Python (Linux) 3.10.5 (main, Sep  2 2022, 05:41:19) [GCC 11.2.0]
+
+Legal docs and information: aka.ms/AzureCliLegal
+
+
+Your CLI is up-to-date.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;sudo docker ps -a&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vagrant@vagrant:~$ sudo docker ps -a 
+CONTAINER ID   IMAGE     COMMAND     CREATED         STATUS    PORTS     NAMES
+3c85a5007e7a   ubuntu    &amp;quot;sleep 1&amp;quot;   8 minutes ago   Created             docker4
+872783464fe9   ubuntu    &amp;quot;sleep 1&amp;quot;   8 minutes ago   Created             docker3
+8311acc96a3f   ubuntu    &amp;quot;sleep 1&amp;quot;   8 minutes ago   Created             docker2
+5942c514536e   ubuntu    &amp;quot;sleep 1&amp;quot;   8 minutes ago   Created             docker1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If all is good, let&amp;rsquo;s move on to Building Our Project Framework.&lt;/p&gt;
+&lt;h2 id=&#34;troubleshooting&#34;&gt;Troubleshooting&lt;/h2&gt;
+&lt;p&gt;I ran into the following error:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;==&amp;gt; default: Running provisioner: ansible_local...
+    default: Installing Ansible...
+The following SSH command responded with a non-zero exit status.
+Vagrant assumes that this means the command failed!
+
+
+                add-apt-repository ppa:ansible/ansible -y &amp;amp;&amp;amp;                 apt-get update -y -qq &amp;amp;&amp;amp;                 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ansible --option &amp;quot;Dpkg::Options::=--force-confold&amp;quot;
+              
+
+Stdout from the command:
+
+Hit:1 http://in.archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://in.archive.ubuntu.com/ubuntu jammy-updates InRelease [114 kB]
+Get:3 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu jammy InRelease [18.0 kB]
+Get:4 http://in.archive.ubuntu.com/ubuntu jammy-backports InRelease [99.8 kB]
+Get:5 http://in.archive.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:6 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu jammy/main amd64 Packages [1,128 B]
+Get:7 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu jammy/main Translation-en [756 B]
+Reading package lists...
+Repository: &#39;deb https://ppa.launchpadcontent.net/ansible/ansible/ubuntu/ jammy main&#39;
+Description:
+Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy. Avoid writing scripts or custom code to deploy and update your applications— automate in a language that approaches plain English, using SSH, with no agents to install on remote systems.
+
+http://ansible.com/
+
+If you face any issues while installing Ansible PPA, file an issue here:
+https://github.com/ansible-community/ppa/issues
+More info: https://launchpad.net/~ansible/+archive/ubuntu/ansible
+Adding repository.
+Adding deb entry to /etc/apt/sources.list.d/ansible-ubuntu-ansible-jammy.list
+Adding disabled deb-src entry to /etc/apt/sources.list.d/ansible-ubuntu-ansible-jammy.list
+Adding key to /etc/apt/trusted.gpg.d/ansible-ubuntu-ansible.gpg with fingerprint 6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367
+
+
+Stderr from the command:
+
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-updates/InRelease is not valid yet (invalid for another 4h 12min 3s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-backports/InRelease is not valid yet (invalid for another 3h 14min 10s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-security/InRelease is not valid yet (invalid for another 4h 11min 51s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-updates/InRelease is not valid yet (invalid for another 4h 11min 59s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-backports/InRelease is not valid yet (invalid for another 3h 14min 6s). Updates for this repository will not be applied.
+E: Release file for http://in.archive.ubuntu.com/ubuntu/dists/jammy-security/InRelease is not valid yet (invalid for another 4h 11min 47s). Updates for this repository will not be applied.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This tells me that my system clock is off. I get this a lot when things go awry dual-booting Windows and Arch on the same box. I set my system time with the following command:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;# timedatectl set-time &amp;quot;2022-09-24 09:58:54&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Then I was able to run &lt;code&gt;vagrant provision&lt;/code&gt; to finish setting up my dev box and run through the playbook.&lt;/p&gt;
+</content>
+    </item>
+    
     <item>
       <title>Introducing the Over-Engineered Resume</title>
       <link>https://jeffstagg.com/posts/220904-over-engineered-resume/</link>
-      <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
+      <pubDate>Sun, 04 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://jeffstagg.com/posts/220904-over-engineered-resume/</guid>
       <description>Introducing the Over-Engineered Resume Resumes are boring, and it can be challenging to really demonstrate expertise in a craft through a document outlining your experience. Have you ever wanted to show off something with code, but all your work is zipped up behind an NDA? Ever wanted a project to hack away at and try out some new technology?
@@ -104,18 +324,18 @@ build patch cables, etc.&lt;/p&gt;
 terminating ends and testing all my connections. I&amp;rsquo;m building a Lack Rack at the moment to host my patch panel, router, switch, and other goodies that make up my home network.&lt;/p&gt;
 &lt;h2 id=&#34;materials&#34;&gt;Materials&lt;/h2&gt;
 &lt;p&gt;No links seen here are affiliate links.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.amazon.com/CompTIA-Network-Guide-Sixth-N10-006/dp/0071848223/&#34;&gt;All-In-One Network+ Book&lt;/a&gt; - Mike Meyers - I used the N10-006 version because it was only $8 used, and I&amp;rsquo;ll make up the updated info by buying Meyers&amp;rsquo; Udemy course
+&lt;p&gt;&lt;a href=&#34;https://www.amazon.com/CompTIA-Network-Guide-Sixth-N10-006/dp/0071848223/&#34;&gt;All-In-One Network+ Book&lt;/a&gt; - Mike Meyers - I used the N10-006 version because it was only $8 used, and I&amp;rsquo;ll make up the updated info by buying Meyers&#39; Udemy course
 &lt;a href=&#34;https://www.udemy.com/course/total-comptia-network-n10-008/&#34;&gt;TOTAL: CompTIA Network+ (N10-008)&lt;/a&gt; - Mike Meyers, Joe Ramm - For those that don&amp;rsquo;t like
 to read, you can listen to the soothing voices of Mike Meyers and Joe Ramm whisper sweet subnetting into your ears. This is basically just a narration of the Network+ book.
 &lt;a href=&#34;https://www.udemy.com/course/comptia-network-008-exams/&#34;&gt;CompTIA Network+ (N10-008) 6 Practice Exams&lt;/a&gt; - Jason Dion
-&lt;a href=&#34;https://www.professormesser.com/network-plus/n10-008/n10-008-video/n10-008-training-course/&#34;&gt;Professor Messer&amp;rsquo;s CompTIA N10-008 Network+ Course&lt;/a&gt; - Professor Messer offers a free video training course. He goes in a different order than Meyers, so I&amp;rsquo;m saving his stuff for after Meyers&amp;rsquo; training
+&lt;a href=&#34;https://www.professormesser.com/network-plus/n10-008/n10-008-video/n10-008-training-course/&#34;&gt;Professor Messer&amp;rsquo;s CompTIA N10-008 Network+ Course&lt;/a&gt; - Professor Messer offers a free video training course. He goes in a different order than Meyers, so I&amp;rsquo;m saving his stuff for after Meyers&#39; training
 &lt;a href=&#34;https://www.youtube.com/user/sunnylearning/videos&#34;&gt;Sunny Learning&lt;/a&gt; - Sunny has some interesting information on his channel and explains in a way that is easy to work with. Check out his &lt;a href=&#34;https://www.youtube.com/watch?v=ecCuyq-Wprc&#34;&gt;&amp;ldquo;Subnetting Is Simple&amp;rdquo; video&lt;/a&gt;.
 &lt;a href=&#34;https://ankiweb.net/&#34;&gt;Anki&lt;/a&gt; - Anki is open-source software that helps you memorize things with flash cards. I found &lt;a href=&#34;https://ankiweb.net/shared/info/161585723&#34;&gt;this Network+ Starter Set deck&lt;/a&gt; and will be using these cards until I develop my own, based on what I&amp;rsquo;m lagging behind in. I may not need to make my own, we&amp;rsquo;ll see how the practice exams go.
 &lt;a href=&#34;https://f-droid.org/en/packages/com.ichi2.anki/&#34;&gt;AnkiDroid&lt;/a&gt; - Android app for Anki.&lt;/p&gt;
 &lt;p&gt;Note: The Udemy courses sound expensive until you browse the Udemy site for a little while. Their courses go on &amp;ldquo;sale&amp;rdquo;, and the courses that all say they&amp;rsquo;re $100-200 are actually about $12 or so at other times. I paid $13 for the two Udemy courses, and at the time I&amp;rsquo;m writing this post to grab links, they&amp;rsquo;re on sale for $9.99. Don&amp;rsquo;t get impatient, just give it a week if they&amp;rsquo;re not on sale right now. Start with the book anyway.&lt;/p&gt;
 &lt;h2 id=&#34;strategy&#34;&gt;Strategy&lt;/h2&gt;
 &lt;p&gt;The way I learn best is to read, then think about or discuss what I&amp;rsquo;ve read, then put it into practice. With the materials I&amp;rsquo;ve got available,
-I&amp;rsquo;m reading a chapter in the All In One book, then watching the corresponding video in Meyers&amp;rsquo; video course. This helps me to hear it explained, sometimes in a different way, and helps me to solidify what I&amp;rsquo;ve read. Once I&amp;rsquo;ve made it through the book and videos, I&amp;rsquo;ll take a practice exam and see how I do. If I make above a 70%, I&amp;rsquo;ll go ahead and schedule my exam for 1 month out and continue my studies. If I make below a 70%, I&amp;rsquo;ll schedule it for 2 months out. The test isn&amp;rsquo;t cheap, so I only want to have to take it once.&lt;/p&gt;
+I&amp;rsquo;m reading a chapter in the All In One book, then watching the corresponding video in Meyers&#39; video course. This helps me to hear it explained, sometimes in a different way, and helps me to solidify what I&amp;rsquo;ve read. Once I&amp;rsquo;ve made it through the book and videos, I&amp;rsquo;ll take a practice exam and see how I do. If I make above a 70%, I&amp;rsquo;ll go ahead and schedule my exam for 1 month out and continue my studies. If I make below a 70%, I&amp;rsquo;ll schedule it for 2 months out. The test isn&amp;rsquo;t cheap, so I only want to have to take it once.&lt;/p&gt;
 &lt;p&gt;Next I&amp;rsquo;ll go through the exam objectives and see if there&amp;rsquo;s anywhere I feel like I&amp;rsquo;m lacking. Based on where I did poorly on the practice exams, I&amp;rsquo;ll focus on areas I felt weakest. It may help to go through some of Professor Messer&amp;rsquo;s videos and Sunny&amp;rsquo;s videos on some topics as well. Every week leading up to the exam, I&amp;rsquo;ll take a practice exam to develop a rhythm.&lt;/p&gt;
 &lt;h3 id=&#34;osi-model&#34;&gt;OSI Model&lt;/h3&gt;
 &lt;ul&gt;

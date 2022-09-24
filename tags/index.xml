@@ -7,11 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Intellectual Property laws create an artificial scarcity by controlling supply of the product.</copyright>
-    <lastBuildDate>Sun, 04 Sep 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://jeffstagg.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 24 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jeffstagg.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>resume</title>
+      <link>https://jeffstagg.com/tags/resume/</link>
+      <pubDate>Sat, 24 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://jeffstagg.com/tags/resume/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
     <item>
       <title>code samples</title>
       <link>https://jeffstagg.com/tags/code-samples/</link>
-      <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
+      <pubDate>Sun, 04 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://jeffstagg.com/tags/code-samples/</guid>
       <description></description>
@@ -21,19 +31,9 @@
     <item>
       <title>portfolio-building</title>
       <link>https://jeffstagg.com/tags/portfolio-building/</link>
-      <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
+      <pubDate>Sun, 04 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://jeffstagg.com/tags/portfolio-building/</guid>
-      <description></description>
-      <content></content>
-    </item>
-    
-    <item>
-      <title>resume</title>
-      <link>https://jeffstagg.com/tags/resume/</link>
-      <pubDate>Sun, 04 Sep 2022 00:00:00 -0500</pubDate>
-      
-      <guid>https://jeffstagg.com/tags/resume/</guid>
       <description></description>
       <content></content>
     </item>
